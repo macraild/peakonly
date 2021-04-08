@@ -68,8 +68,8 @@ if __name__ == "__main__":
     print("Finding ROIs...")
     rois = {}
     for f in files:
-        rois[f] = get_ROIs(f, 0.005, 15, 3, None)
-    mzregions = construct_mzregions(rois, 0.005)
+        rois[f] = get_ROIs(f, args.mz_deviation, args.min_ROI_length, args.max_zeros, None)
+    mzregions = construct_mzregions(rois, args.mz_deviation)
     components = rt_grouping(mzregions)
 
     print("Aligning ROIs...")
@@ -102,7 +102,7 @@ if __name__ == "__main__":
                 _, segmentator_output = segmentator(signal)
                 segmentator_output = segmentator_output.data.sigmoid().cpu().numpy()
                 borders[sample] = get_borders(segmentator_output[0, 0, :], segmentator_output[0, 1, :],
-                                              peak_minimum_points=8,
+                                              peak_minimum_points=args.min_peak_length,
                                               interpolation_factor=len(signal[0, 0]) / len(roi.i))
             else:
                 to_delete.append(i)
