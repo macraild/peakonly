@@ -28,7 +28,7 @@ from models.cnn_segmentator import Segmentator
 def build_parser():
     parser = argparse.ArgumentParser(description="""Run Peakonly from the commandline,
                                      bypassing the gui.""")
-    parser.add_argument('--mzML', metavar='mzMLfiles', action='append', help='Files to process')
+    parser.add_argument('--mzML', metavar='mzMLfiles', nargs='*', action='append', help='Files to process')
     parser.add_argument('--mz-deviation', help='m/z tolerance for defining ROIs',
                         type=float, default=0.005)
     parser.add_argument('--min-ROI-length', help='Minimum length of ROIs, in data points',
